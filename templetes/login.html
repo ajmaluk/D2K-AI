@@ -1,0 +1,185 @@
+<!-- templates/login.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #ffe0b2, #ffd180, #ffb74d);
+            font-family: 'Arial', sans-serif;
+            animation: gradientAnimation 10s infinite alternate;
+        }
+
+        #login-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: backgroundAnimation 5s infinite alternate;
+            max-width: 400px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-family: 'Verdana', sans-serif;
+            animation: colorChange 5s infinite alternate, scaleAnimation 2s infinite alternate, shadowAnimation 5s infinite alternate;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #000;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #contact-us {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            text-align: right;
+            color: #333;
+            font-size: 0.8em;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background-color: #ffe0b2;
+            }
+            50% {
+                background-color: #ffd180;
+            }
+            100% {
+                background-color: #ffb74d;
+            }
+        }
+
+        @keyframes colorChange {
+            0% {
+                color: #ff0000;
+            }
+            20% {
+                color: #ff7f00;
+            }
+            40% {
+                color: #ffff00;
+            }
+            60% {
+                color: #00ff00;
+            }
+            80% {
+                color: #0000ff;
+            }
+            100% {
+                color: #8a2be2;
+            }
+        }
+
+        @keyframes scaleAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shadowAnimation {
+            0% {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            50% {
+                text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+            }
+            100% {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="login-container">
+        <h1>D2K AI</h1>
+        <form action="{{ url_for('login') }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="contact-us" class="contact-section">
+        <p>Contact Us:</p>
+        <p>Email : <a href="mailto:ajmaluk321nyd@gmail.com">ajmaluk321nyd@gmail.com</a></p>
+        <p>Developed by D2K</p>
+    </div>
+</body>
+
+</html>
