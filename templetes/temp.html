@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>D2K AI Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <style>
+        body {
+            background-color: #ffd700;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            color: #333333;
+        }
+
+        #chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #800080;
+            margin-bottom: 20px;
+        }
+
+        .user-message {
+            color: #007bff;
+        }
+
+        .ai-message {
+            color: #28a745;
+        }
+
+        .typing {
+            font-style: italic;
+            color: #ff4500;
+        }
+
+        #chat-history {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        #user-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #ai-response {
+            font-weight: bold;
+            color: #800080;
+        }
+
+        #ai-animation {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                max-width: 100%;
+            }
+
+            #chat-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat-container">
+        <h1>Hello {{ username }}!</h1>
+        <div id="chat-history"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+        <div id="ai-response"></div>
+
+    </div>
+
+    <script>
+        document.getElementById('user-input').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            var userInput = document.getElementById('user-input').value;
+            document.getElementById('chat-history').innerHTML += '<div class="user-message"><strong>{{ username }}:</strong> ' + userInput + '</div>';
+
+            document.getElementById('user-input').value = '';
+
+            document.getElementById('chat-history').innerHTML += '<div class="typing"><strong>AI is typing...</strong></div>';
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'user_input=' + userInput,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    var aiResponse = data.result;
+
+                    document.querySelector('.typing').remove();
+
+                    setTimeout(function () {
+                        var lines = aiResponse.split('\n');
+                        lines.forEach(function (line, index) {
+                            if (index === 0) {
+                                document.getElementById('chat-history').innerHTML += '<div class="ai-message"><strong>AI:</strong> <span>' + line + '</span></div>';
+                            } else {
+                                document.getElementById('chat-history').innerHTML += '<div class="ai-message">' + line + '</div>';
+                            }
+                        });
+                        document.getElementById('ai-response').innerText = 'AI Response: ' + aiResponse;
+                    }, 500);
+                });
+        }
+    </script>
+</body>
+
+</html>
