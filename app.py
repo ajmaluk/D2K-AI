@@ -39,7 +39,7 @@ from os import listdir
 
 API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1"
 
-api_key = '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'
+api_key = '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'
 
 print(f"API Key: {api_key}")
 headers = {"Authorization": f"Bearer {api_key}"}
